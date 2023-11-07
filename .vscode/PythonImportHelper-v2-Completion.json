@@ -1,0 +1,86 @@
+[
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Task",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "isExtraImport": true,
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "router = APIRouter()\ntasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks():\n    return tasks\n@router.get(\"/tasks/{task_id}\", response_model=Task)",
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "tasks",
+        "kind": 5,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "tasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks():\n    return tasks\n@router.get(\"/tasks/{task_id}\", response_model=Task)\nasync def read_task(task_id: int):",
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "Task",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Task(BaseModel):\n    title: str\n    description: str",
+        "detail": "models",
+        "documentation": {}
+    }
+]
