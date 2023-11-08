@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main app</title>
+    <title>Task Manager</title>
 </head>
 <body>
-    
+    <h1>Task Manager</h1>
+
+    <!-- Form for Adding a New Task -->
+    <form id="add-task-form">
+        <input type="text" id="task-title" placeholder="Task Title" required>
+        <input type="text" id="task-description" placeholder="Task Description" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Task List -->
+    <ul id="task-list">
+        <!-- Example Task Item -->
+        <li>
+            <h2>Task Title</h2>
+            <p>Task Description</p>
+            <button class="edit-button">Edit</button>
+            <button class="delete-button">Delete</button>
+        </li>
+    </ul>
+
+    <script>
+        // JavaScript code to handle task management will go here
+    </script>
 </body>
 </html>
