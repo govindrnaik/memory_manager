@@ -66,6 +66,14 @@
         "documentation": {}
     },
     {
+        "label": ".models",
+        "kind": 6,
+        "importPath": ".models",
+        "description": ".models",
+        "detail": ".models",
+        "documentation": {}
+    },
+    {
         "label": "app",
         "kind": 5,
         "importPath": "main",
