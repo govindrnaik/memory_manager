@@ -1,1 +1,34 @@
-{%  %}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/htmx.org@1.7.2/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/htmx.org@1.7.2/dist/htmx.css">
+
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <!-- Form for Adding a New Task -->
+    <form id="add-task-form">
+        <input type="text" id="task-title" placeholder="Task Title" required>
+        <input type="text" id="task-description" placeholder="Task Description" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Task List -->
+    <ul id="task-list">
+        <!-- Example Task Item -->
+        <li>
+            <h2>Task Title</h2>
+            <p>Task Description</p>
+            <button class="edit-button">Edit</button>
+            <button class="delete-button">Delete</button>
+        </li>
+    </ul>
+
+    <script>
+        // JavaScript code to handle task management will go here
+    </script>
+</body>
+</html>

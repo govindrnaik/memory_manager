@@ -40,6 +40,14 @@
         "documentation": {}
     },
     {
+        "label": "Task",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "importPath": "routes.tasks",
         "description": "routes.tasks",
@@ -110,7 +118,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"index.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
+        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\n@app.post(\"/update_task/{task_id}\")\nasync def update_task(task_id: int, task: Task):\n    # Update the task description (you can replace this with your logic)\n    # For demonstration purposes, we'll just return the updated task",
         "detail": "main",
         "documentation": {}
     },
@@ -119,7 +127,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"index.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\n@app.post(\"/update_task/{task_id}\")\nasync def update_task(task_id: int, task: Task):\n    # Update the task description (you can replace this with your logic)\n    # For demonstration purposes, we'll just return the updated task\n    updated_task = task\n    return HTMXResponse(updated_task, template=\"tasks.html\", selector=f\"#task-{task_id}\")",
         "detail": "main",
         "documentation": {}
     },
