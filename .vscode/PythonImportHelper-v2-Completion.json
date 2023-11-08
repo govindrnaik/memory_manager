@@ -128,7 +128,16 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class Task(BaseModel):\n    title: str\n    description: str",
+        "peekOfCode": "class Task(BaseModel):\n    title: str\n    description: str\n    status: bool = False\nclass User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
         "detail": "models",
         "documentation": {}
     }
