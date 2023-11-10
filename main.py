@@ -16,15 +16,6 @@ templates = Jinja2Templates(directory="templates")
 async def read_root(request: Request):
     return templates.TemplateResponse("tasks.html", {"request": request, "tasks": tasks})
 
-@app.post("/update_task/{task_id}")
-async def update_task(task_id: int, task: Task):
-    # Update the task description (you can replace this with your logic)
-    # For demonstration purposes, we'll just return the updated task
-    updated_task = task
-    return HTMXResponse(updated_task, template="tasks.html", selector=f"#task-{task_id}")
-
-
-
 app.include_router(router=tasks)
 if __name__ == "__main__":
     import uvicorn
