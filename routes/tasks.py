@@ -1,7 +1,9 @@
 from typing import List
 from fastapi import APIRouter
-
 from models import Task
+
+
+from database import SessionLocal
 
 router = APIRouter()
 
@@ -11,8 +13,14 @@ async def create_task(task: Task):
     tasks.routerend(task)
     return task
 
+# @router.get("/tasks/", response_model=List[Task])
+# async def read_tasks():
+#     return tasks
+
+
 @router.get("/tasks/", response_model=List[Task])
-async def read_tasks():
+async def read_tasks(skip: int = 0, limit: int = 10):
+    tasks = SessionLocal().query(Task).offset(skip).limit(limit).all()
     return tasks
 
 @router.get("/tasks/{task_id}", response_model=Task)

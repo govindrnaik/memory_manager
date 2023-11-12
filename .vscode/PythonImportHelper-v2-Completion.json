@@ -48,6 +48,62 @@
         "documentation": {}
     },
     {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "importPath": "routes.tasks",
         "description": "routes.tasks",
@@ -92,7 +148,7 @@
         "kind": 5,
         "importPath": "routes.tasks",
         "description": "routes.tasks",
-        "peekOfCode": "router = APIRouter()\ntasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks():\n    return tasks\n@router.get(\"/tasks/{task_id}\", response_model=Task)",
+        "peekOfCode": "router = APIRouter()\ntasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n# @router.get(\"/tasks/\", response_model=List[Task])\n# async def read_tasks():\n#     return tasks\n@router.get(\"/tasks/\", response_model=List[Task])",
         "detail": "routes.tasks",
         "documentation": {}
     },
@@ -101,16 +157,53 @@
         "kind": 5,
         "importPath": "routes.tasks",
         "description": "routes.tasks",
-        "peekOfCode": "tasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks():\n    return tasks\n@router.get(\"/tasks/{task_id}\", response_model=Task)\nasync def read_task(task_id: int):",
+        "peekOfCode": "tasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n# @router.get(\"/tasks/\", response_model=List[Task])\n# async def read_tasks():\n#     return tasks\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks(skip: int = 0, limit: int = 10):",
         "detail": "routes.tasks",
         "documentation": {}
     },
     {
-        "label": ".models",
+        "label": "Task",
         "kind": 6,
-        "importPath": ".models",
-        "description": ".models",
-        "detail": ".models",
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "class Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "DATABASE_URL = \"postgresql+psycopg2://postgres:postgres@localhost:5432/todo\"\nengine = create_engine(DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "engine = create_engine(DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "Base = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "detail": "database",
         "documentation": {}
     },
     {
@@ -118,7 +211,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8001)",
+        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
         "detail": "main",
         "documentation": {}
     },
@@ -127,7 +220,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8001)",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
         "detail": "main",
         "documentation": {}
     },
