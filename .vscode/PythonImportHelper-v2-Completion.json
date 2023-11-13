@@ -16,6 +16,22 @@
         "documentation": {}
     },
     {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -32,19 +48,19 @@
         "documentation": {}
     },
     {
-        "label": "Task",
-        "importPath": "models",
-        "description": "models",
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
         "isExtraImport": true,
-        "detail": "models",
+        "detail": "pydantic",
         "documentation": {}
     },
     {
-        "label": "Task",
-        "importPath": "models",
-        "description": "models",
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
         "isExtraImport": true,
-        "detail": "models",
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -53,6 +69,54 @@
         "description": "database",
         "isExtraImport": true,
         "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "TaskTable",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "TaskExisted",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "TaskModel",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
         "documentation": {}
     },
     {
@@ -96,14 +160,6 @@
         "documentation": {}
     },
     {
-        "label": "sessionmaker",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
         "label": "router",
         "importPath": "routes.tasks",
         "description": "routes.tasks",
@@ -136,11 +192,21 @@
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
+        "label": "get_all_tasks",
+        "kind": 2,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "def get_all_tasks(db: Session = Depends(get_db)):\n    tasks = db.query(TaskTable).all()\n    return tasks\n# Endpoint to create a task\n@router.post(\"/tasks/\", response_model=TaskModel)\ndef create_task(task: TaskModel, db: Session = Depends(get_db)):\n    print(task.dict())\n    db_task = TaskTable(**task.dict())\n    db.add(db_task)\n    db.commit()",
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "create_task",
+        "kind": 2,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "def create_task(task: TaskModel, db: Session = Depends(get_db)):\n    print(task.dict())\n    db_task = TaskTable(**task.dict())\n    db.add(db_task)\n    db.commit()\n    db.refresh(db_task)\n    return task",
+        "detail": "routes.tasks",
         "documentation": {}
     },
     {
@@ -148,25 +214,25 @@
         "kind": 5,
         "importPath": "routes.tasks",
         "description": "routes.tasks",
-        "peekOfCode": "router = APIRouter()\ntasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n# @router.get(\"/tasks/\", response_model=List[Task])\n# async def read_tasks():\n#     return tasks\n@router.get(\"/tasks/\", response_model=List[Task])",
+        "peekOfCode": "router = APIRouter()\n@router.get(\"/tasks/\", response_model=List[TaskModel])\nasync def read_tasks(skip: int = 0, limit: int = 10):\n    tasks = SessionLocal().query(TaskTable).offset(skip).limit(limit).all()\n    return tasks\n# @router.post(\"/tasks/\", response_model=Task)\nasync def create_task(title: str, description: str, db: Session = Depends(get_db)):\n    new_task = TaskModel(title=title, description=description)\n    db.add(new_task)\n    db.commit()",
         "detail": "routes.tasks",
         "documentation": {}
     },
     {
-        "label": "tasks",
-        "kind": 5,
-        "importPath": "routes.tasks",
-        "description": "routes.tasks",
-        "peekOfCode": "tasks = []\n@router.post(\"/tasks/\", response_model=Task)\nasync def create_task(task: Task):\n    tasks.routerend(task)\n    return task\n# @router.get(\"/tasks/\", response_model=List[Task])\n# async def read_tasks():\n#     return tasks\n@router.get(\"/tasks/\", response_model=List[Task])\nasync def read_tasks(skip: int = 0, limit: int = 10):",
-        "detail": "routes.tasks",
-        "documentation": {}
-    },
-    {
-        "label": "Task",
+        "label": "TaskTable",
         "kind": 6,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "class Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "peekOfCode": "class TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String)\n    description = Column(String)\nBase.metadata.create_all(bind=engine)",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)",
         "detail": "database",
         "documentation": {}
     },
@@ -175,7 +241,16 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "DATABASE_URL = \"postgresql+psycopg2://postgres:postgres@localhost:5432/todo\"\nengine = create_engine(DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)",
+        "peekOfCode": "DATABASE_URL = \"postgresql+psycopg2://postgres:postgres@localhost:5432/todo\"\nSQLALCHEMY_DATABASE_URL = \"postgresql+psycopg2://postgres:postgres@localhost:5432/postgres\"\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nBase = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SQLALCHEMY_DATABASE_URL",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "SQLALCHEMY_DATABASE_URL = \"postgresql+psycopg2://postgres:postgres@localhost:5432/postgres\"\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nBase = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
         "detail": "database",
         "documentation": {}
     },
@@ -184,16 +259,7 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "engine = create_engine(DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "kind": 5,
-        "importPath": "database",
-        "description": "database",
-        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL)\nBase = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String",
         "detail": "database",
         "documentation": {}
     },
@@ -202,7 +268,16 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "Base = declarative_base()\nfrom sqlalchemy import Column, Integer, String\nclass Task(Base):\n    __tablename__ = \"tasks\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, index=True)\n    description = Column(String, index=True)\n    completed = Column(Integer, index=True)",
+        "peekOfCode": "Base = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):",
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "kind": 5,
+        "importPath": "database",
+        "description": "database",
+        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):\n    __tablename__ = 'tasks'",
         "detail": "database",
         "documentation": {}
     },
@@ -225,11 +300,20 @@
         "documentation": {}
     },
     {
-        "label": "Task",
+        "label": "TaskModel",
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class Task(BaseModel):\n    title: str\n    description: str\n    status: bool = False\nclass User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
+        "peekOfCode": "class TaskModel(BaseModel):\n    title: str\n    description: str\nclass TaskExisted(BaseModel):\n    id: int\n    title: str\n    description: str\nclass User(BaseModel):\n    username: str\n    email: str",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "TaskExisted",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class TaskExisted(BaseModel):\n    id: int\n    title: str\n    description: str\nclass User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
         "detail": "models",
         "documentation": {}
     },
