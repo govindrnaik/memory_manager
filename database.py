@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import Boolean, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -20,7 +21,6 @@ def get_db():
         db.close()
 
 
-from sqlalchemy import Column, Integer, String
 
 class TaskTable(Base):
     __tablename__ = 'tasks'
@@ -28,5 +28,4 @@ class TaskTable(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     description = Column(String)
-
-Base.metadata.create_all(bind=engine)
+    status = Column(Boolean, default=False)

@@ -3,11 +3,7 @@ from pydantic import BaseModel
 class TaskModel(BaseModel):
     title: str
     description: str
-
-class TaskExisted(BaseModel):
-    id: int
-    title: str
-    description: str
+    status: bool
 
 class User(BaseModel):
     username: str

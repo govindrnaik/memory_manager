@@ -4,28 +4,50 @@
     <script src="https://unpkg.com/htmx.org@1.7.2/dist/htmx.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/htmx.org@1.7.2/dist/htmx.css">
 
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+
     <title>Task Manager</title>
 </head>
 <body>
+    <nav class="navigation">
+        <a href="/">Home</a>
+        <a href="/tasks">Tasks</a>  <!-- This is the link to the tasks page -->
+
+    </nav>
+
+    <div class="content">
+
+
     <h1>Task Manager</h1>
 
     <!-- Form for Adding a New Task -->
-    <form id="add-task-form">
-        <input type="text" id="task-title" placeholder="Task Title" required>
-        <input type="text" id="task-description" placeholder="Task Description" required>
+    <form id="add-task-form" action="task/" method="POST" target="_self">
+        <input type="text" name="title" id="task-title" placeholder="Task Title" required>
+        <input type="text" name="description" id="task-description" placeholder="Task Description" required>
+        <input type="checkbox" name="status" id="task-status" placeholder="Task Status">
         <button type="submit">Add Task</button>
     </form>
 
     <!-- Task List -->
-    <ul id="task-list">
-        <!-- Example Task Item -->
-        <li>
-            <h2>Task Title</h2>
-            <p>Task Description</p>
-            <button class="edit-button">Edit</button>
-            <button class="delete-button">Delete</button>
-        </li>
-    </ul>
+        <table id="task-table">
+            <!-- Example Task Item -->
+            {% for task in tasks %}
+
+            {% if task.status == 0 %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.status }}</td>
+                <td> <button class="edit-button">Edit</button> </td>
+                <td><button class="delete-button">Delete</button></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+
 
     <script>
         // JavaScript code to handle task management will go here

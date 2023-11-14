@@ -32,6 +32,14 @@
         "documentation": {}
     },
     {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -48,19 +56,35 @@
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
         "isExtraImport": true,
-        "detail": "pydantic",
+        "detail": "fastapi.responses",
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
         "isExtraImport": true,
-        "detail": "pydantic",
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
         "documentation": {}
     },
     {
@@ -88,19 +112,19 @@
         "documentation": {}
     },
     {
-        "label": "TaskExisted",
-        "importPath": "models",
-        "description": "models",
+        "label": "Base",
+        "importPath": "database",
+        "description": "database",
         "isExtraImport": true,
-        "detail": "models",
+        "detail": "database",
         "documentation": {}
     },
     {
-        "label": "TaskModel",
-        "importPath": "models",
-        "description": "models",
+        "label": "engine",
+        "importPath": "database",
+        "description": "database",
         "isExtraImport": true,
-        "detail": "models",
+        "detail": "database",
         "documentation": {}
     },
     {
@@ -120,11 +144,11 @@
         "documentation": {}
     },
     {
-        "label": "create_engine",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
+        "label": "TaskModel",
+        "importPath": "models",
+        "description": "models",
         "isExtraImport": true,
-        "detail": "sqlalchemy",
+        "detail": "models",
         "documentation": {}
     },
     {
@@ -152,6 +176,22 @@
         "documentation": {}
     },
     {
+        "label": "Boolean",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "declarative_base",
         "importPath": "sqlalchemy.ext.declarative",
         "description": "sqlalchemy.ext.declarative",
@@ -168,14 +208,6 @@
         "documentation": {}
     },
     {
-        "label": "Jinja2Templates",
-        "importPath": "fastapi.templating",
-        "description": "fastapi.templating",
-        "isExtraImport": true,
-        "detail": "fastapi.templating",
-        "documentation": {}
-    },
-    {
         "label": "StaticFiles",
         "importPath": "fastapi.staticfiles",
         "description": "fastapi.staticfiles",
@@ -184,20 +216,11 @@
         "documentation": {}
     },
     {
-        "label": "HTMLResponse",
-        "importPath": "fastapi.responses",
-        "description": "fastapi.responses",
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
         "isExtraImport": true,
-        "detail": "fastapi.responses",
-        "documentation": {}
-    },
-    {
-        "label": "get_all_tasks",
-        "kind": 2,
-        "importPath": "routes.tasks",
-        "description": "routes.tasks",
-        "peekOfCode": "def get_all_tasks(db: Session = Depends(get_db)):\n    tasks = db.query(TaskTable).all()\n    return tasks\n# Endpoint to create a task\n@router.post(\"/tasks/\", response_model=TaskModel)\ndef create_task(task: TaskModel, db: Session = Depends(get_db)):\n    print(task.dict())\n    db_task = TaskTable(**task.dict())\n    db.add(db_task)\n    db.commit()",
-        "detail": "routes.tasks",
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -205,7 +228,16 @@
         "kind": 2,
         "importPath": "routes.tasks",
         "description": "routes.tasks",
-        "peekOfCode": "def create_task(task: TaskModel, db: Session = Depends(get_db)):\n    print(task.dict())\n    db_task = TaskTable(**task.dict())\n    db.add(db_task)\n    db.commit()\n    db.refresh(db_task)\n    return task",
+        "peekOfCode": "def create_task(task: TaskModel, db: Session = Depends(get_db)):\n    db_task = TaskTable(**task.dict())\n    db.add(instance=db_task)\n    db.commit()\n    db.refresh(db_task)\n    return task\n@router.get(\"/tasks/{task_id}\")\nasync def read_task(task_id: int = 1, db: Session = Depends(get_db)):\n    print(task_id)\n    task = db.query(TaskTable).filter(TaskTable.id == task_id).first()",
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_tasks",
+        "kind": 2,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "def get_all_tasks(db: Session = Depends(dependency=get_db)):\n    tasks = db.query(TaskTable).all()\n    print(tasks)\n    return tasks\n@router.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request, db: Session = Depends(dependency=get_db)):\n    tasks = db.query(TaskTable).all()\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})",
         "detail": "routes.tasks",
         "documentation": {}
     },
@@ -214,7 +246,16 @@
         "kind": 5,
         "importPath": "routes.tasks",
         "description": "routes.tasks",
-        "peekOfCode": "router = APIRouter()\n@router.get(\"/tasks/\", response_model=List[TaskModel])\nasync def read_tasks(skip: int = 0, limit: int = 10):\n    tasks = SessionLocal().query(TaskTable).offset(skip).limit(limit).all()\n    return tasks\n# @router.post(\"/tasks/\", response_model=Task)\nasync def create_task(title: str, description: str, db: Session = Depends(get_db)):\n    new_task = TaskModel(title=title, description=description)\n    db.add(new_task)\n    db.commit()",
+        "peekOfCode": "router = APIRouter()\ntemplates = Jinja2Templates(directory=\"templates\")\n# Endpoint to create a task\n@router.post(\"/task/\", response_model=TaskModel)\ndef create_task(task: TaskModel, db: Session = Depends(get_db)):\n    db_task = TaskTable(**task.dict())\n    db.add(instance=db_task)\n    db.commit()\n    db.refresh(db_task)\n    return task",
+        "detail": "routes.tasks",
+        "documentation": {}
+    },
+    {
+        "label": "templates",
+        "kind": 5,
+        "importPath": "routes.tasks",
+        "description": "routes.tasks",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# Endpoint to create a task\n@router.post(\"/task/\", response_model=TaskModel)\ndef create_task(task: TaskModel, db: Session = Depends(get_db)):\n    db_task = TaskTable(**task.dict())\n    db.add(instance=db_task)\n    db.commit()\n    db.refresh(db_task)\n    return task\n@router.get(\"/tasks/{task_id}\")",
         "detail": "routes.tasks",
         "documentation": {}
     },
@@ -223,7 +264,7 @@
         "kind": 6,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "class TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String)\n    description = Column(String)\nBase.metadata.create_all(bind=engine)",
+        "peekOfCode": "class TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String)\n    description = Column(String)\n    status = Column(Boolean, default=False)",
         "detail": "database",
         "documentation": {}
     },
@@ -232,7 +273,7 @@
         "kind": 2,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nclass TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String)",
         "detail": "database",
         "documentation": {}
     },
@@ -259,7 +300,7 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL)\nBase = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String",
+        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL)\nBase = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nclass TaskTable(Base):",
         "detail": "database",
         "documentation": {}
     },
@@ -268,7 +309,7 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "Base = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):",
+        "peekOfCode": "Base = declarative_base()\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nclass TaskTable(Base):\n    __tablename__ = 'tasks'",
         "detail": "database",
         "documentation": {}
     },
@@ -277,7 +318,7 @@
         "kind": 5,
         "importPath": "database",
         "description": "database",
-        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nfrom sqlalchemy import Column, Integer, String\nclass TaskTable(Base):\n    __tablename__ = 'tasks'",
+        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\nclass TaskTable(Base):\n    __tablename__ = 'tasks'\n    id = Column(Integer, primary_key=True, index=True)",
         "detail": "database",
         "documentation": {}
     },
@@ -286,7 +327,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
+        "peekOfCode": "app = FastAPI()\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
         "detail": "main",
         "documentation": {}
     },
@@ -295,7 +336,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    return templates.TemplateResponse(\"tasks.html\", {\"request\": request, \"tasks\": tasks})\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\napp.include_router(router=tasks)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\",reload=True, port=8000)",
         "detail": "main",
         "documentation": {}
     },
@@ -304,16 +345,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class TaskModel(BaseModel):\n    title: str\n    description: str\nclass TaskExisted(BaseModel):\n    id: int\n    title: str\n    description: str\nclass User(BaseModel):\n    username: str\n    email: str",
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "TaskExisted",
-        "kind": 6,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "class TaskExisted(BaseModel):\n    id: int\n    title: str\n    description: str\nclass User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
+        "peekOfCode": "class TaskModel(BaseModel):\n    title: str\n    description: str\n    status: bool\nclass User(BaseModel):\n    username: str\n    email: str\n    password: str\n    is_active: bool = True\n    is_superuser: bool = False",
         "detail": "models",
         "documentation": {}
     },
